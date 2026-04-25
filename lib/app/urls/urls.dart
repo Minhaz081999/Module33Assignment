@@ -1,14 +1,19 @@
 class Urls {
-  static const String _baseURL = 'https://ecom-rs8e.onrender.com/api';
-  static const String signUpUrl = '${_baseURL}/auth/signup';
-  static const String verifyOtpUrl = '${_baseURL}/auth/verify-otp';
-  static const String signInUrl = '${_baseURL}/auth/login';
-
-  static const String homeSlidersUrl = '${_baseURL}/slides';
+  static const String _baseUrl = 'https://ecom-rs8e.onrender.com/api';
+  // -------------- Authentication part --------------------------
+  static const String signUpUrl = '${_baseUrl}/auth/signup';
+  static const String verifyOtpUrl = '${_baseUrl}/auth/verify-otp';
+  static const String signInUrl = '${_baseUrl}/auth/login';
+// ----------------------------------------------------------------
+  static const String homeSlidersUrl = '${_baseUrl}/slides';
+  static const String addToCartUrl = '$_baseUrl/cart';
 
   static String getCategoriesUrl(int pageSize, int pageNo) =>
-      '$_baseURL/categories?page=$pageNo&count=$pageSize';
+      '$_baseUrl/categories?page=$pageNo&count=$pageSize';
 
   static String getProductsUrl(int pageSize, int pageNo) =>
-      '$_baseURL/products?page=$pageNo&count=$pageSize';
+      '$_baseUrl/products?page=$pageNo&count=$pageSize';
+
+  static String getProductDetailsUrl(String productId) =>
+      '$_baseUrl/products/id/$productId';
 }

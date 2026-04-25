@@ -9,31 +9,58 @@ import '../features/auth/presentation/screens/verify_otp_screen.dart';
 import '../features/shared/data/models/category_model.dart';
 import '../features/shared/presentation/screens/main_nav_holder_screen.dart';
 
-
+//
+// class Routes {
+//   static Route<dynamic> onGenerateRoute (RouteSettings settings){
+//
+//     late Widget widget ;
+//
+//     switch(settings.name){
+//       case SplashScreen.name :
+//         widget = SplashScreen();
+//       case SignUpScreen.name :
+//         widget = SignUpScreen();
+//       case SignInScreen.name :
+//         widget = SignInScreen();
+//       case VerifyOtpScreen.name :
+//         final email = settings.arguments as String;
+//         widget = VerifyOtpScreen(email: email,);
+//       case MainNavHolderScreen.name :
+//         widget = MainNavHolderScreen();
+//       case ProductListScreen.name :
+//        final category = settings.arguments as CategoryModel;
+//         widget = ProductListScreen(category: category );
+//       case ProductDetailsScreen.name:
+//         widget = ProductDetailsScreen();
+//     }
+//     return MaterialPageRoute(builder: (context) =>  widget);
+//
+//   }
+// }
 class Routes {
-  static Route<dynamic> onGenerateRoute (RouteSettings settings){
+  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
+    late Widget widget;
 
-    late Widget widget ;
-
-    switch(settings.name){
-      case SplashScreen.name :
+    switch (settings.name) {
+      case SplashScreen.name:
         widget = SplashScreen();
-      case SignUpScreen.name :
+      case SignUpScreen.name:
         widget = SignUpScreen();
-      case SignInScreen.name :
+      case SignInScreen.name:
         widget = SignInScreen();
-      case VerifyOtpScreen.name :
+      case VerifyOtpScreen.name:
         final email = settings.arguments as String;
-        widget = VerifyOtpScreen(email: email,);
-      case MainNavHolderScreen.name :
+        widget = VerifyOtpScreen(email: email);
+      case MainNavHolderScreen.name:
         widget = MainNavHolderScreen();
-      case ProductListScreen.name :
-       final category = settings.arguments as CategoryModel;
-        widget = ProductListScreen(category: category );
+      case ProductListScreen.name:
+        final category = settings.arguments as CategoryModel;
+        widget = ProductListScreen(category: category);
       case ProductDetailsScreen.name:
-        widget = ProductDetailsScreen();
+        final productId = settings.arguments as String;
+        widget = ProductDetailsScreen(productId: productId);
     }
-    return MaterialPageRoute(builder: (context) =>  widget);
 
+    return MaterialPageRoute(builder: (context) => widget);
   }
 }

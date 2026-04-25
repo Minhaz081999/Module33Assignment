@@ -1,6 +1,7 @@
 import 'package:crafty_bay/app/app_colors.dart';
 import 'package:crafty_bay/features/auth/presentation/screens/withoutConst.dart';
 import 'package:crafty_bay/features/home/presentation/providers/home_slider_provider.dart';
+import 'package:crafty_bay/features/shared/presentation/providers/category_list_provider.dart';
 import 'package:crafty_bay/features/shared/presentation/providers/main_nav_provider.dart';
 import 'package:crafty_bay/features/shared/presentation/widgets/theme_switcher.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +30,9 @@ class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
-        (_)async{
-          await context.read<HomeSliderProvider>().getHomeSlider();
+        (_){
+           context.read<HomeSliderProvider>().getHomeSlider();
+           context.read<CategoryListProvider>().getCategories();
         }
     );
   }

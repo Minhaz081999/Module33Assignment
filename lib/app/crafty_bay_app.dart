@@ -6,6 +6,7 @@ import 'package:crafty_bay/features/auth/presentation/providers/otp_timer_provid
 import 'package:crafty_bay/features/auth/presentation/screens/splash_screen.dart';
 import 'package:crafty_bay/features/home/presentation/providers/home_slider_provider.dart';
 import 'package:crafty_bay/features/product/presentation/providers/color_picker_provider.dart';
+import 'package:crafty_bay/features/shared/presentation/providers/category_list_provider.dart';
 import 'package:crafty_bay/features/shared/presentation/providers/main_nav_provider.dart';
 import 'package:crafty_bay/features/shared/presentation/screens/main_nav_holder_screen.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class CraftyBayApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ColorPickerProvider() ),
         ChangeNotifierProvider(create: (_) => SizePickerProvider() ),
         ChangeNotifierProvider(create: (_) => HomeSliderProvider() ),
+        ChangeNotifierProvider(create: (_) => CategoryListProvider() ),
 
 
       ],

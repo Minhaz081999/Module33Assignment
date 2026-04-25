@@ -6,6 +6,7 @@ import 'package:crafty_bay/features/product/presentation/screens/product_list_sc
 import 'package:flutter/material.dart';
 
 import '../features/auth/presentation/screens/verify_otp_screen.dart';
+import '../features/shared/data/models/category_model.dart';
 import '../features/shared/presentation/screens/main_nav_holder_screen.dart';
 
 
@@ -27,8 +28,8 @@ class Routes {
       case MainNavHolderScreen.name :
         widget = MainNavHolderScreen();
       case ProductListScreen.name :
-       String categoryName = settings.arguments as String;
-        widget = ProductListScreen(categoryName: categoryName);
+       final category = settings.arguments as CategoryModel;
+        widget = ProductListScreen(category: category );
       case ProductDetailsScreen.name:
         widget = ProductDetailsScreen();
     }

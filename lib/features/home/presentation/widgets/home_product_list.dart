@@ -17,7 +17,10 @@ class HomeProductList extends StatelessWidget {
 
           itemCount: 10, // itemCount: লিস্টে মোট কয়টি আইটেম থাকবে।
 
-          itemBuilder: (context, index) => const ProductCard(), // itemBuilder: প্রতিটি আইটেম দেখতে কেমন হবে।
+          itemBuilder: (context, index)  {
+          //  const ProductCard()
+
+          }, // itemBuilder: প্রতিটি আইটেম দেখতে কেমন হবে।
 
           separatorBuilder: (context, index) => const SizedBox(width: 6) // separatorBuilder: প্রতিটি আইটেমের মাঝখানে কী থাকবে (যেমন: Divider বা SizedBox)।
 

@@ -5,6 +5,6 @@ class SignInParams {
   SignInParams({required this.email, required this.password});
 
   Map<String, dynamic> toJson() {
-    return {'email': email, 'otp': password};
+    return {'email': email, 'password': password};
   }
 }

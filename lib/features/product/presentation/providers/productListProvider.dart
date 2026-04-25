@@ -1,11 +1,12 @@
+import 'package:crafty_bay/features/product/data/models/product_model.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../app/setup_network_client.dart';
 import '../../../../app/urls/urls.dart';
 import '../../../../core/network_caller/network_response.dart';
-import '../../data/models/category_model.dart';
 
-class CategoryListProvider extends ChangeNotifier {
+
+class productListProvider extends ChangeNotifier {
   final int _pageCount = 30;
   int _currentPage = 0;
   int? _lastPage;
@@ -16,19 +17,19 @@ class CategoryListProvider extends ChangeNotifier {
   // More data loading
   bool _getMoreDataInProgress = false;
 
-  List<CategoryModel> _categoryList = [];
+  List<ProductModel> _productList = [];
 
   bool get getInitialDataInProgress => _getInitialDataInProgress;
 
   bool get getMoreDataInProgress => _getMoreDataInProgress;
 
-  List<CategoryModel> get categoryList => _categoryList;
+  List<ProductModel> get productList => _productList;
 
   String? _errorMessage;
 
   String? get errorMessage => _errorMessage;
 
-  Future<bool> getCategories() async {
+  Future<bool> getProducts(String categoryId) async {
     if (_lastPage != null && _currentPage >= _lastPage!) {
       return false;
     }
@@ -44,16 +45,16 @@ class CategoryListProvider extends ChangeNotifier {
     notifyListeners();
 
     final NetworkResponse response = await getNetworkCaller().getRequest(
-      Urls.getCategoriesUrl(_pageCount, _currentPage),
+      Urls.getProductsUrl(_pageCount, _currentPage),
     );
 
     if (response.isSuccess) {
-      List<CategoryModel> categories = [];
+      List<ProductModel> products = [];
       _lastPage = response.body!['data']['last_page'];
-      for (Map<String, dynamic> category in response.body!['data']['results']) {
-        categories.add(CategoryModel.fromJson(category));
+      for (Map<String, dynamic> product in response.body!['data']['results']) {
+        products.add(ProductModel.fromJson(product) );
       }
-      _categoryList.addAll(categories);
+      _productList.addAll(products);
       isSuccess = true;
       _errorMessage = null;
     } else {

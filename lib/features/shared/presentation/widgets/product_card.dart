@@ -1,15 +1,18 @@
 import 'package:crafty_bay/features/product/presentation/screens/product_details_screen.dart';
+import 'package:crafty_bay/features/shared/presentation/widgets/app_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../app/app_colors.dart';
-import '../../../../app/asset_paths.dart';
 import '../../../../app/constants.dart';
+import '../../../product/data/models/product_model.dart';
 
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
-    super.key,
+    super.key, required this.productModel,
   });
+
+  final ProductModel productModel;
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +44,15 @@ class ProductCard extends StatelessWidget {
                     borderRadius: .circular(10),
                   border: Border.all(width: 0,style: .solid)
                 ),
-                child: Image.asset(AssetPaths.dummyShoePng,),
+                // child: Image.asset(AssetPaths.dummyShoePng,),
+                child: AppNetworkImage(url: _getImage(productModel.images) ),
               ),
               // ------ Text -----
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Text('Nike A34RF - New edition 2026 Alpha',
+                    Text(productModel.title,
                       maxLines: 1,
                       style: TextStyle(
                           fontWeight: .w500,
@@ -59,14 +63,14 @@ class ProductCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: .spaceBetween,
                       children: [
-                        Text('${Constants.takaSign}120',style: TextStyle(
+                        Text('${Constants.takaSign}${productModel.currentPrice}',style: TextStyle(
                             fontWeight: .w500,
                             color: AppColors.themeColor
                         ),),
                         Wrap(
                           children: [
                             Icon(Icons.star, size: 16, color: Colors.amber,),
-                            Text('4.5'),
+                            Text('${productModel.rating}'),
                           ],
                         ),
                         Container(
@@ -88,5 +92,9 @@ class ProductCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getImage(List<String> urls) {
+    return urls.isNotEmpty ? urls.first : '';
   }
 }

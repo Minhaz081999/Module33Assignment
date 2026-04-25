@@ -1,7 +1,8 @@
 import 'package:crafty_bay/features/product/presentation/screens/product_list_screen.dart';
-import 'package:crafty_bay/features/shared/presentation/providers/main_nav_provider.dart';
+import 'package:crafty_bay/features/shared/data/models/category_model.dart';
+import 'package:crafty_bay/features/shared/presentation/widgets/app_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 
 import '../../../../app/app_colors.dart';
 import '../../../../app/extensions/utils_extension.dart';
@@ -9,14 +10,16 @@ import '../../../../app/extensions/utils_extension.dart';
 
 class CategoryCard extends StatelessWidget {
   const CategoryCard({
-    super.key,
+    super.key, required this.categoryModel
   });
+
+  final CategoryModel categoryModel;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-         Navigator.pushNamed(context, ProductListScreen.name,arguments: 'Electronics');
+         Navigator.pushNamed(context, ProductListScreen.name,arguments: categoryModel );
       },
       child: Column(
         spacing: 4,
@@ -28,12 +31,11 @@ class CategoryCard extends StatelessWidget {
             elevation: 0, // shadow
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Icon(
-                Icons.laptop, size: 48, color: AppColors.themeColor,),
+              child: AppNetworkImage(url: categoryModel.icon, height: 48, width: 48,)
             ),
           ),
           // ------ Text --------
-          Text(getTitle('Electronics'), style:context.textTheme.bodyLarge?.copyWith(
+          Text(getTitle(categoryModel.title ), style:context.textTheme.bodyLarge?.copyWith(
               color: AppColors.themeColor,
               fontWeight: .bold
           )

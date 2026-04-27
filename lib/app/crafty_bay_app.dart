@@ -22,6 +22,8 @@ import 'app_colors.dart';
 class CraftyBayApp extends StatelessWidget {
   const CraftyBayApp({super.key});
 
+  static GlobalKey<NavigatorState> navigatorkey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -45,6 +47,7 @@ class CraftyBayApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 title: 'CraftyBayApp',
                 // ----- Routes -----
+                navigatorKey: navigatorkey,
                 initialRoute: SplashScreen.name,
                 onGenerateRoute: Routes.onGenerateRoute,
                 // --------- ThemeMode ----------

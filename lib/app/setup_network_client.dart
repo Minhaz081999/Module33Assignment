@@ -1,4 +1,7 @@
+import 'package:crafty_bay/app/controllers/auth_controller.dart';
+import 'package:crafty_bay/app/crafty_bay_app.dart';
 import 'package:crafty_bay/core/network_caller/network_caller.dart';
+import 'package:crafty_bay/features/auth/presentation/screens/sign_in_screen.dart';
 // This function is used for OBJECT creation
 // Example :
 // 1) NetworkCaller object = NetworkCaller(
@@ -26,6 +29,9 @@ NetworkCaller getNetworkCaller (){
     },
     onUnauthorize: ()=>{
       // Logout from app
+      AuthController.clearUserData(),
+      // move to 'SignIn page '
+      CraftyBayApp.navigatorkey.currentState!.pushNamed(SignInScreen.name)
       // Clear user data
       // Redirect to the sign in UI
     }

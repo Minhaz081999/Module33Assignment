@@ -8,9 +8,10 @@ import 'network_response.dart';
 
 class NetworkCaller {
 
+  NetworkCaller({required this.headers, required this.onUnauthorize});
 
   final Map<String, String> Function() headers;
-  NetworkCaller({required this.headers, required this.onUnauthorize});
+
 
   final VoidCallback onUnauthorize;
 
@@ -96,7 +97,7 @@ class NetworkCaller {
 
       _logResponse(response);
       //print(response);
-      // Success
+      // for Success
       if (response.statusCode == 200 || response.statusCode == 201) {
         final decodedJson = jsonDecode(response.body);
         // store INFORMATION into Model(NetworkResponse)
@@ -106,7 +107,7 @@ class NetworkCaller {
           body: decodedJson,
         );
       } else if (response.statusCode == 400 || response.statusCode == 401) {
-        // Unauthorize
+        // for Unauthorize
         onUnauthorize();
         return NetworkResponse(
           statusCode: response.statusCode,

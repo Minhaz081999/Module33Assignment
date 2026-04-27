@@ -1,4 +1,5 @@
 import 'package:crafty_bay/app/app_colors.dart';
+import 'package:crafty_bay/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:crafty_bay/features/auth/presentation/screens/withoutConst.dart';
 import 'package:crafty_bay/features/home/presentation/providers/home_slider_provider.dart';
 import 'package:crafty_bay/features/shared/presentation/providers/category_list_provider.dart';
@@ -7,12 +8,12 @@ import 'package:crafty_bay/features/shared/presentation/widgets/theme_switcher.d
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../app/controllers/auth_controller.dart';
 import '../../../Category/presentation/screens/category_list_screen.dart';
 import '../../../auth/presentation/screens/withConst.dart';
 import '../../../cart/presentation/screens/cart_screen.dart';
 import '../../../home/presentation/screens/home_screen.dart';
 import '../../../wish_list/presentation/screens/wish_list_screen.dart';
-
 
 class MainNavHolderScreen extends StatefulWidget {
   const MainNavHolderScreen({super.key});
@@ -21,7 +22,6 @@ class MainNavHolderScreen extends StatefulWidget {
 
   @override
   State<MainNavHolderScreen> createState() => _MainNavHolderScreenState();
-
 }
 
 class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
@@ -29,31 +29,27 @@ class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_){
-           context.read<HomeSliderProvider>().getHomeSlider();
-           context.read<CategoryListProvider>().getCategories();
-        }
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<HomeSliderProvider>().getHomeSlider();
+      context.read<CategoryListProvider>().getCategories();
+    });
   }
 
-
   final List<Widget> _screens = [
-     HomeScreen(),
-     CategoryListScreen(),
-     CartScreen(),
-     WishListScreen()
-   ];
+    HomeScreen(),
+    CategoryListScreen(),
+    CartScreen(),
+    WishListScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     // For variable calling
     // MainNavProvider pWatch = context.watch<MainNavProvider>();
-    
+
     return Consumer<MainNavProvider>(
       builder: (context, mainNavProvider, _) {
         return Scaffold(
-
           body: _screens[mainNavProvider.selectedIndex],
 
           bottomNavigationBar: BottomNavigationBar(
@@ -62,20 +58,43 @@ class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
             showUnselectedLabels: true,
 
             currentIndex: mainNavProvider.selectedIndex,
-            onTap: ( currentIndex ){
+            onTap: (currentIndex) async {
               // For function calling
               // context.read<MainNavProvider>().setIndex(currentIndex);
+              //mainNavProvider.setIndex(currentIndex);
+              // ---------- Route Guard --------------------------
+              // চেক করছি: এই পেজে যাওয়ার জন্য কি লগইন চেক করা দরকার?
+              if (mainNavProvider.shouldCheckIfUserLoggedIn(currentIndex)) {
+                // The Security Guard: একজন গার্ড আপনার আইডি কার্ড চেক করছে
+                // (AuthController.isLoggedIn()).
+                final isLoggedIn = await AuthController.isLoggedIn();
+
+                if (isLoggedIn == false) {
+                  Navigator.pushNamed(context, SignInScreen.name);
+                  return;
+                }
+              }
               mainNavProvider.setIndex(currentIndex);
+              // -------------------------X-----------------------------------
             },
-              items: [
-                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-                BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Categories'),
-                BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Carts'),
-                BottomNavigationBarItem(icon: Icon(Icons.favorite_outline), label: 'Wishlist'),
-              ]
+            items: [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.dashboard),
+                label: 'Categories',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart),
+                label: 'Carts',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.favorite_outline),
+                label: 'Wishlist',
+              ),
+            ],
           ),
         );
-      }
+      },
     );
   }
 }

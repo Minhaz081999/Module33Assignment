@@ -7,9 +7,11 @@ import 'package:provider/provider.dart';
 
 import '../../../../app/app_colors.dart';
 import '../../../../app/constants.dart';
+import '../../../../app/controllers/auth_controller.dart';
 import '../../../auth/presentation/screens/sign_in_screen.dart';
 import '../../../shared/presentation/widgets/center_progress_indicator.dart';
 import '../../../shared/presentation/widgets/snack_bar_message.dart';
+import '../../data/models/add_to_cart_params.dart';
 import '../providers/add_to_cart_provider.dart';
 import '../providers/product_details_provider.dart';
 import '../widgets/color_picker.dart';
@@ -310,8 +312,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       ),
     );
   }
-
+// User define function()---------------
   Future<void> _onTapAddToCart() async {
+    // first check local memory data
     if (await AuthController.isLoggedIn() == false) {
       Navigator.pushNamed(context, SignInScreen.name);
       return;

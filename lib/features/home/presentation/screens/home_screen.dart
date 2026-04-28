@@ -45,7 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 16,),
               HomeCategoryList(),
               const SizedBox(height: 16,),
-              SectionHeader(title: 'Popular', onTapSeeAll: (){} ),
+              SectionHeader(title: 'Popular', onTapSeeAll: (){
+
+              } ),
               const SizedBox(height: 16,),
               HomeProductList(),
               const SizedBox(height: 16,),

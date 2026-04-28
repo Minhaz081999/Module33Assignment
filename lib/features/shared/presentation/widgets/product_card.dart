@@ -105,6 +105,8 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ProductCard এর build মেথডের ভেতর দিন
+    print("Product: ${productModel.title} -> Image URL: ${_getImage(productModel.images)}");
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(
@@ -126,7 +128,7 @@ class ProductCard extends StatelessWidget {
             children: [
               Container(
                 width: 180,
-                height: 140,
+                height: 125,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: AppColors.themeColor.withAlpha(20),
@@ -136,6 +138,7 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
                 child: AppNetworkImage(url: _getImage(productModel.images)),
+
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -196,4 +199,11 @@ class ProductCard extends StatelessWidget {
   String _getImage(List<String> urls) {
     return urls.isNotEmpty ? urls.first : '';
   }
+  // String _getImage(List<String> urls) {
+  //   if (urls.isNotEmpty && urls.first.startsWith('http')) {
+  //     return urls.first.trim();
+  //   }
+  //   // এখানে একটি অনলাইন প্লেসহোল্ডার ইমেজের লিঙ্ক দিতে পারেন
+  //   return 'https://via.placeholder.com/150';
+  // }
 }

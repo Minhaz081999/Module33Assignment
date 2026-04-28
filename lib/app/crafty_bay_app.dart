@@ -14,6 +14,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 
+import '../features/product/presentation/providers/productListProvider.dart';
 import '../features/product/presentation/providers/size_picker_provider.dart';
 import '../l10n/app_localizations.dart';
 import 'app_colors.dart';
@@ -36,6 +37,7 @@ class CraftyBayApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SizePickerProvider() ),
         ChangeNotifierProvider(create: (_) => HomeSliderProvider() ),
         ChangeNotifierProvider(create: (_) => CategoryListProvider() ),
+        ChangeNotifierProvider(create: (_) => ProductListProvider() ),
 
 
       ],

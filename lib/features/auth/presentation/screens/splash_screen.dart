@@ -1,4 +1,5 @@
 
+import 'package:crafty_bay/app/controllers/auth_controller.dart';
 import 'package:crafty_bay/features/auth/presentation/screens/withoutConst.dart';
 import 'package:crafty_bay/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:crafty_bay/features/shared/presentation/screens/main_nav_holder_screen.dart';
@@ -28,6 +29,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _moveToNextScreen() async {
     // wait 5 seconds in this Splash Screen
     await Future.delayed(Duration(seconds: 5));
+    // get user information if store in Local Memory
+    await AuthController.loadUserData();
     // ----- Move to next page -----
     // Navigator.pushReplacementNamed(context, SignUpScreen.name);
     Navigator.pushReplacementNamed(context, SignUpScreen.name);

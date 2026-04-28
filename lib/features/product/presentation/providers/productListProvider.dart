@@ -6,7 +6,7 @@ import '../../../../app/urls/urls.dart';
 import '../../../../core/network_caller/network_response.dart';
 
 
-class productListProvider extends ChangeNotifier {
+class ProductListProvider extends ChangeNotifier {
   final int _pageCount = 30;
   int _currentPage = 0;
   int? _lastPage;

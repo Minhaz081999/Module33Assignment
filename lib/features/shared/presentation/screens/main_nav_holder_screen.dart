@@ -13,6 +13,7 @@ import '../../../Category/presentation/screens/category_list_screen.dart';
 import '../../../auth/presentation/screens/withConst.dart';
 import '../../../cart/presentation/screens/cart_screen.dart';
 import '../../../home/presentation/screens/home_screen.dart';
+import '../../../product/presentation/providers/productListProvider.dart';
 import '../../../wish_list/presentation/screens/wish_list_screen.dart';
 
 class MainNavHolderScreen extends StatefulWidget {
@@ -32,6 +33,8 @@ class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeSliderProvider>().getHomeSlider();
       context.read<CategoryListProvider>().getCategories();
+      context.read<ProductListProvider>().getProducts('1');
+      
     });
   }
 

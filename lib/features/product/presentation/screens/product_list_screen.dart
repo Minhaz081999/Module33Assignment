@@ -18,7 +18,7 @@ class ProductListScreen extends StatefulWidget {
 }
 
 class _ProductListScreenState extends State<ProductListScreen> {
-  productListProvider _productListProvider = productListProvider();
+  ProductListProvider _productListProvider = ProductListProvider();
   ScrollController _scrollController = ScrollController();
 
   @override
@@ -46,7 +46,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
       value: _productListProvider,
       child: Scaffold(
         appBar: AppBar(title: Text(widget.category.title)),
-        body: Consumer<productListProvider>(
+        body: Consumer<ProductListProvider>(
           builder: (context, productListProvider, _) {
             if(productListProvider.getInitialDataInProgress){
               return CenterProgressIndicator();

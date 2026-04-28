@@ -27,10 +27,18 @@ class AppNetworkImage extends StatelessWidget {
         imageUrl: url,
         width: width,
         height: height,
-        fit: fit ?? BoxFit.fill,
-        // placeholder: (context,url)=> NoImage(),
+        fit: fit ?? BoxFit.cover,
+        //placeholder: (context,url)=> NoImage(),
         errorWidget: (context,url, error)=> NoImage(),
       progressIndicatorBuilder: (context,url, downloadProgress)=> NoImage()
+        // ইমেজ লোড হওয়ার সময় আপনার নিজের তৈরি ইন্ডিকেটর দেখান
+        // progressIndicatorBuilder: (context, url, progress) => const Center(
+        //   child: CenterProgressIndicator(),
+        // ),
+        // errorWidget: (context, url, error) {
+        //   debugPrint("Image Load Error: $error"); // কনসোলে এরর চেক করার জন্য
+        //   return const NoImage();
+        // },
       ),
     );
   }

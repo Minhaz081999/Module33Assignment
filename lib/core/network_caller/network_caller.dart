@@ -50,7 +50,7 @@ class NetworkCaller {
           isSuccess: true,
           body: decodedJson,
         );
-      }else if (response.statusCode == 400) {
+      }else if (response.statusCode == 401) {
         // Unauthorize
         onUnauthorize();
         return NetworkResponse(
@@ -59,14 +59,14 @@ class NetworkCaller {
           errorMessage: 'Unauthorize',
         );
       }
-      // Failed
+      // Failed response.statusCode == 400
       else {
         final decodedJson = jsonDecode(response.body);
         return NetworkResponse(
           statusCode: response.statusCode,
           isSuccess: false,
           body: null,
-          errorMessage: decodedJson['message'],
+          errorMessage: decodedJson['msg'],
         );
       }
     } on Exception catch (e) {
@@ -83,6 +83,7 @@ class NetworkCaller {
   Future<NetworkResponse> postRequest(
     String url, {
     Map<String, dynamic>? body,
+    bool fromLogin = false
   })async {
     try {
       final Uri uri = Uri.parse(url);
@@ -106,23 +107,26 @@ class NetworkCaller {
           isSuccess: true,
           body: decodedJson,
         );
-      } else if (response.statusCode == 400 || response.statusCode == 401) {
+      } else if (response.statusCode == 401) {
         // for Unauthorize
-        onUnauthorize();
+        if(!fromLogin){
+          onUnauthorize();
+        }
+
         return NetworkResponse(
           statusCode: response.statusCode,
           isSuccess: false,
           errorMessage: 'Unauthorize',
         );
       }
-      // Failed
+      // Failed response.statusCode == 400
       else {
         final decodedJson = jsonDecode(response.body);
         return NetworkResponse(
           statusCode: response.statusCode,
           isSuccess: false,
           body: null,
-          errorMessage: decodedJson['message'],
+          errorMessage: decodedJson['msg'],
         );
       }
     } on Exception catch (e) {
@@ -163,7 +167,7 @@ class NetworkCaller {
           isSuccess: true,
           body: decodedJson,
         );
-      } else if (response.statusCode == 400) {
+      } else if (response.statusCode == 401) {
         // Unauthorize
         onUnauthorize();
         return NetworkResponse(
@@ -172,14 +176,14 @@ class NetworkCaller {
           errorMessage: 'Unauthorize',
         );
       }
-      // Failed
+      // Failed response.statusCode == 400
       else {
         final decodedJson = jsonDecode(response.body);
         return NetworkResponse(
           statusCode: response.statusCode,
           isSuccess: false,
           body: null,
-          errorMessage: decodedJson['message'],
+          errorMessage: decodedJson['msg'],
         );
       }
     } on Exception catch (e) {
@@ -221,7 +225,7 @@ class NetworkCaller {
           isSuccess: true,
           body: decodedJson,
         );
-      } else if (response.statusCode == 400) {
+      } else if (response.statusCode == 401) {
         // Unauthorize
         onUnauthorize();
         return NetworkResponse(
@@ -230,14 +234,14 @@ class NetworkCaller {
           errorMessage: 'Unauthorize',
         );
       }
-      // Failed
+      // Failed response.statusCode == 400
       else {
         final decodedJson = jsonDecode(response.body);
         return NetworkResponse(
           statusCode: response.statusCode,
           isSuccess: false,
           body: null,
-          errorMessage: decodedJson['message'],
+          errorMessage: decodedJson['msg'],
         );
       }
     } on Exception catch (e) {
@@ -278,7 +282,7 @@ class NetworkCaller {
           isSuccess: true,
           body: decodedJson,
         );
-      } else if (response.statusCode == 400) {
+      } else if (response.statusCode == 401) {
         // Unauthorize
         onUnauthorize();
         return NetworkResponse(
@@ -294,7 +298,7 @@ class NetworkCaller {
           statusCode: response.statusCode,
           isSuccess: false,
           body: null,
-          errorMessage: decodedJson['message'],
+          errorMessage: decodedJson['msg'],
         );
       }
     } on Exception catch (e) {

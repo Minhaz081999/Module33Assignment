@@ -3,6 +3,7 @@ import 'package:crafty_bay/app/extensions/utils_extension.dart';
 import 'package:crafty_bay/app/validators.dart';
 import 'package:crafty_bay/features/auth/data/models/sign_in_params.dart';
 import 'package:crafty_bay/features/auth/presentation/providers/sign_in_provider.dart';
+import 'package:crafty_bay/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:crafty_bay/features/auth/presentation/widgets/app_logo.dart';
 import 'package:crafty_bay/features/shared/presentation/screens/main_nav_holder_screen.dart';
 import 'package:crafty_bay/features/shared/presentation/widgets/center_progress_indicator.dart';
@@ -87,7 +88,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           return const CenterProgressIndicator();
                         }
                         return FilledButton(
-                          onPressed: _onTapSignUpButton,
+                          onPressed: _onTapSignInButton,
                           child: Text('Sign In'),
                         );
                       },
@@ -108,7 +109,7 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Future<void> _onTapSignUpButton() async {
+  Future<void> _onTapSignInButton() async {
     if (_formKey.currentState!.validate()) {
       SignInParams params = SignInParams(
         email: _emailTEController.text.trim(),
@@ -124,6 +125,9 @@ class _SignInScreenState extends State<SignInScreen> {
       }
       // Navigator.pop(context);
     }
+  }
+  void _onTapSignUpButton() {
+    Navigator.pushNamed(context, SignUpScreen.name);
   }
 
   @override

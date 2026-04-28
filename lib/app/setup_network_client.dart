@@ -24,16 +24,22 @@ import 'package:crafty_bay/features/auth/presentation/screens/sign_in_screen.dar
 //     }, mane Application er json data niye jacche
 NetworkCaller getNetworkCaller (){
   return NetworkCaller(
-    headers: ()=>{
-      'Content-Type': 'application/json'
+    headers: () {
+      final headers = {'Content-Type': 'application/json'};
+      // this is happened during Login button click otherwise not
+      if(AuthController.accessToken != null ){
+        headers['token'] = '${AuthController.accessToken}' ;
+      }
+      return headers;
     },
     onUnauthorize: ()=>{
-      // Logout from app
+      // Logout from app, // Clear user data
       AuthController.clearUserData(),
-      // move to 'SignIn page '
-      CraftyBayApp.navigatorkey.currentState!.pushNamed(SignInScreen.name)
-      // Clear user data
+      // if unAuthorize then move to 'SignIn page '
       // Redirect to the sign in UI
+      CraftyBayApp.navigatorkey.currentState!.pushNamed(SignInScreen.name)
+
+
     }
   );
 }

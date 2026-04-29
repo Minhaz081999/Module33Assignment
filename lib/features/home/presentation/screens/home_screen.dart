@@ -2,6 +2,10 @@
 
 import 'package:crafty_bay/app/asset_paths.dart';
 import 'package:crafty_bay/features/home/presentation/widgets/home_carousel_slider.dart';
+import 'package:crafty_bay/features/product/data/models/product_model.dart';
+import 'package:crafty_bay/features/product/presentation/providers/productListProvider.dart';
+import 'package:crafty_bay/features/product/presentation/screens/product_list_screen.dart';
+import 'package:crafty_bay/features/shared/data/models/category_model.dart';
 import 'package:crafty_bay/features/shared/presentation/providers/main_nav_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -23,6 +27,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 16,),
               SectionHeader(title: 'Popular', onTapSeeAll: (){
 
+                  // শুধুমাত্র ডাটা থাকলেই পরবর্তী কাজ করো
+                 //context.read<ProductListProvider>().getProducts('1');
+                  Navigator.pushNamed(context, ProductListScreen.name);
               } ),
               const SizedBox(height: 16,),
               HomeProductList(),

@@ -26,6 +26,7 @@ class MainNavHolderScreen extends StatefulWidget {
 }
 
 class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
+
   @override
   void initState() {
     // TODO: implement initState
@@ -33,6 +34,7 @@ class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeSliderProvider>().getHomeSlider();
       context.read<CategoryListProvider>().getCategories();
+
       context.read<ProductListProvider>().getProducts('1');
       
     });

@@ -1,6 +1,7 @@
 import 'package:crafty_bay/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:crafty_bay/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:crafty_bay/features/auth/presentation/screens/splash_screen.dart';
+import 'package:crafty_bay/features/product/data/models/product_model.dart';
 import 'package:crafty_bay/features/product/presentation/screens/product_details_screen.dart';
 import 'package:crafty_bay/features/product/presentation/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
@@ -54,8 +55,11 @@ class Routes {
       case MainNavHolderScreen.name:
         widget = MainNavHolderScreen();
       case ProductListScreen.name:
-        final category = settings.arguments as CategoryModel;
-        widget = ProductListScreen(category: category);
+        //final product = settings.arguments as ProductModel;
+        widget = ProductListScreen(//productModel: product, //category: category,
+        );
+        //final category = settings.arguments as CategoryModel;
+
       case ProductDetailsScreen.name:
         final productId = settings.arguments as String;
         widget = ProductDetailsScreen(productId: productId);

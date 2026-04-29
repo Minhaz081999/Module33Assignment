@@ -268,7 +268,8 @@ class NetworkCaller {
       Response response = await delete(
         uri,
         headers: headers(),
-        body: jsonEncode(body),
+        // যদি বডি null না হয় কেবল তখনই jsonEncode করে পাঠাবে
+        body: body != null ? jsonEncode(body) : null,
       );
 
       _logResponse(response);

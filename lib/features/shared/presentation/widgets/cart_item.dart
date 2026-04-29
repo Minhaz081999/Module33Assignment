@@ -1,4 +1,9 @@
+import 'package:crafty_bay/features/cart/data/models/cart_model.dart';
+import 'package:crafty_bay/features/cart/presentation/providers/cart_list_provider.dart';
+import 'package:crafty_bay/features/shared/presentation/widgets/app_network_image.dart';
+import 'package:crafty_bay/features/shared/presentation/widgets/snack_bar_message.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../app/app_colors.dart';
 import '../../../../app/asset_paths.dart';
@@ -87,7 +92,9 @@ import 'inc_dec_button.dart';
 //   }
 // }
 class CartItem extends StatelessWidget {
-  const CartItem({super.key});
+  const CartItem({super.key, required this.cartModel });
+
+  final CartModel cartModel;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +105,12 @@ class CartItem extends StatelessWidget {
       color: Colors.white,
       child: Row(
         children: [
-          Image.asset(AssetPaths.dummyShoePng, width: 100),
+          AppNetworkImage(
+            url: _getImage(cartModel.productModel.images),
+            width: 100,
+            height: 80,
+            fit: .scaleDown,
+          ),
           Expanded(
             child: Padding(
               padding: const .all(8),
@@ -113,19 +125,23 @@ class CartItem extends StatelessWidget {
                           crossAxisAlignment: .start,
                           children: [
                             Text(
-                              'Nike New Shoe DF3434K 2026 Edition',
+                              // 'Nike New Shoe DF3434K 2026 Edition',
+                              cartModel.productModel.title,
                               maxLines: 1,
                               overflow: .ellipsis,
                               style: context.textTheme.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            Text('Color: Red  Size: XL'),
+                            Text('Color: ${cartModel.color ?? 'N/A'} Size: ${cartModel.size ?? 'N/A'}' ),
                           ],
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: ()  {
+                          // TODO : delete from api and update into provider
+                          DeleteCartItem(context);
+                        },
                         icon: Icon(
                           Icons.delete_forever_outlined,
                           color: Colors.grey,
@@ -137,17 +153,19 @@ class CartItem extends StatelessWidget {
                     mainAxisAlignment: .spaceBetween,
                     children: [
                       Text(
-                        '${Constants.takaSign}120',
+                        '${Constants.takaSign}${cartModel.productModel.currentPrice}',
                         style: context.textTheme.bodyLarge?.copyWith(
                           color: AppColors.themeColor,
                           fontWeight: .bold,
                         ),
                       ),
                       IncDecButton(
-                        initialValue: 1,
+                        initialValue: cartModel.quantity,
                         maxValue: 5,
                         onChange: (int value) {
                           print(value);
+                          context.read<CartListProvider>()
+                          .updateCartItemQuantity(cartModel.id, value);
                         },
                       ),
                     ],
@@ -160,4 +178,24 @@ class CartItem extends StatelessWidget {
       ),
     );
   }
+  String _getImage(List<String> urls) {
+    return urls.isNotEmpty ? urls.first : '';
+  }
+  // FOR delete cart item ------------------------
+
+Future<void> DeleteCartItem(BuildContext context) async{
+  final cartListProvider = context.read<CartListProvider>();
+  bool result = await cartListProvider.deleteCartItem(cartModel.id);
+
+  if (result ) {
+    if (context.mounted) {
+      showSnackBarMessage(context, 'Item removed from cart!');
+    }
+  } else {
+    if (context.mounted) {
+      showSnackBarMessage(context, cartListProvider.errorMessage ?? 'Delete failed'
+      );
+    }
+  }
+}
 }

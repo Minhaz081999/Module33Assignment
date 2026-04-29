@@ -28,6 +28,13 @@ class ProductListProvider extends ChangeNotifier {
   String? _errorMessage;
 
   String? get errorMessage => _errorMessage;
+  String _categoryName = "Products";
+  String get categoryName => _categoryName;
+
+  void setCategoryName(String name) {
+    _categoryName = name;
+    notifyListeners();
+  }
 
   Future<bool> getProducts(String categoryId) async {
     if (_lastPage != null && _currentPage >= _lastPage!) {
@@ -45,7 +52,7 @@ class ProductListProvider extends ChangeNotifier {
     notifyListeners();
 
     final NetworkResponse response = await getNetworkCaller().getRequest(
-      Urls.getProductsUrl(_pageCount, _currentPage),
+      Urls.getProductsUrl(_pageCount, _currentPage, ),
     );
 
     if (response.isSuccess) {

@@ -1,10 +1,17 @@
 import 'package:crafty_bay/features/product/presentation/screens/product_details_screen.dart';
 import 'package:crafty_bay/features/shared/presentation/widgets/app_network_image.dart';
+import 'package:crafty_bay/features/shared/presentation/widgets/snack_bar_message.dart';
+import 'package:crafty_bay/features/wish_list/data/models/wish_list_params.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../app/app_colors.dart';
 import '../../../../app/constants.dart';
+import '../../../../app/controllers/auth_controller.dart';
+import '../../../auth/presentation/screens/sign_in_screen.dart';
 import '../../../product/data/models/product_model.dart';
+import '../../../wish_list/presentation/providers/wish_list_provider.dart';
 
 //
 // class ProductCard extends StatelessWidget {
@@ -177,10 +184,19 @@ class ProductCard extends StatelessWidget {
                             color: AppColors.themeColor,
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: const Icon(
-                            Icons.favorite_outline,
-                            color: Colors.white,
-                            size: 16,
+                          child: Consumer<WishListProvider>(
+                            builder: (context,wishListProvider,_) {
+                              return GestureDetector(
+                                      onTap: (){
+                                        _onTapWishList(context);
+                                      },
+                                child: const Icon(
+                                  Icons.favorite_outline,
+                                  color: Colors.white,
+                                  size: 16,
+                                ),
+                              );
+                            }
                           ),
                         ),
                       ],
@@ -198,6 +214,29 @@ class ProductCard extends StatelessWidget {
 
   String _getImage(List<String> urls) {
     return urls.isNotEmpty ? urls.first : '';
+  }
+  // for wish list button
+Future<void> _onTapWishList(BuildContext context )async{
+  // ১. চেক করুন ইউজার লগইন আছে কি না
+  if (await AuthController.isLoggedIn() == false) {
+    Navigator.pushNamed(context, SignInScreen.name);
+    return;
+  }
+
+    final params = WishListParams(productId: productModel.id);
+
+    final wishListProvider = context.read<WishListProvider>();
+
+    final isSuccess = await wishListProvider.addToWishList(params);
+  // ২. চেক করুন উইজেটটি এখনও স্ক্রিনে আছে কি না (Mounted Check)
+  // স্ক্রিনটি এখনো আছে কি না চেক করা
+  if (!context.mounted) return;
+
+    if(isSuccess ){
+    showSnackBarMessage(context, 'Added to wishlist');
+    }else{
+      showSnackBarMessage(context, wishListProvider.errorMessage ?? "Failed to add to wish list ");
+    }
   }
   // String _getImage(List<String> urls) {
   //   if (urls.isNotEmpty && urls.first.startsWith('http')) {

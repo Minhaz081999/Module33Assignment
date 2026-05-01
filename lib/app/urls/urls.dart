@@ -14,12 +14,16 @@ class Urls {
 
   static String getCategoriesUrl(int pageSize, int pageNo) =>
       '$_baseUrl/categories?page=$pageNo&count=$pageSize';
-
+//----------------------- product --------------------
   static String getProductsUrl(int pageSize, int pageNo,  ) =>
       '$_baseUrl/products?page=$pageNo&count=$pageSize';
 
   static String getProductDetailsUrl(String productId) =>
       '$_baseUrl/products/id/$productId';
 
+  //-------------- wish list ------------------
+  static const String addToWishListUrl = '$_baseUrl/wishlist';
+  static String getWishListUrl(int pageSize, int pageNo ) =>
+      '$_baseUrl/wishlist?page=$pageNo&count=$pageSize';
 
 }

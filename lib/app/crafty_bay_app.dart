@@ -9,6 +9,7 @@ import 'package:crafty_bay/features/product/presentation/providers/color_picker_
 import 'package:crafty_bay/features/shared/presentation/providers/category_list_provider.dart';
 import 'package:crafty_bay/features/shared/presentation/providers/main_nav_provider.dart';
 import 'package:crafty_bay/features/shared/presentation/screens/main_nav_holder_screen.dart';
+import 'package:crafty_bay/features/wish_list/presentation/providers/wish_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +39,7 @@ class CraftyBayApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => HomeSliderProvider() ),
         ChangeNotifierProvider(create: (_) => CategoryListProvider() ),
         ChangeNotifierProvider(create: (_) => ProductListProvider() ),
+        ChangeNotifierProvider(create: (_) => WishListProvider() ),
 
 
       ],
